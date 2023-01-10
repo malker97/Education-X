@@ -1,15 +1,18 @@
-name: Close related issues on merge
+name: Close issues related to a merged pull request based on master branch.
 
 on:
   pull_request:
     types: [closed]
+    branches:
+      - master
 
 jobs:
-  close-issues:
+  closeIssueOnPrMergeTrigger:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Close related issues
-        uses: peter-evans/close-related-issues-action@v1
-        with:
-          access-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Closes issues related to a merged pull request.
+        uses: ldez/gha-mjolnir@v1.0.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
